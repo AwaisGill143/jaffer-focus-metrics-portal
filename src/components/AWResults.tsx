@@ -21,48 +21,33 @@ const AWResults: React.FC<AWResultsProps> = ({ okrData }) => {
     const smartGoals = [
       {
         id: 1,
-        smartType: "Specific",
-        goal: `Define clear weekly milestones for ${goalName}`,
-        description: "Establish specific, well-defined objectives that leave no room for ambiguity",
+        goal: `Establish weekly progress tracking system for ${goalName} with automated reporting`,
+        description: "Implement a comprehensive tracking system that monitors key metrics daily and generates automated weekly reports to stakeholders, ensuring transparency and accountability throughout the project lifecycle.",
         priority: "High",
-        timeline: "Weekly",
-        kpi: "100% of milestones clearly defined"
+        timeline: "Implement within 2 weeks, then ongoing weekly reviews",
+        kpi: "100% of weekly reports delivered on time with 95% data accuracy",
+        topBetsAlignment: "Operational Excellence - Streamlines decision-making through data-driven insights",
+        frameworkAlignment: "Efficiency - Reduces manual reporting time by 75% while improving data quality"
       },
       {
         id: 2,
-        smartType: "Measurable",
-        goal: `Track quantifiable metrics for ${goalName}`,
-        description: "Implement measurement systems to monitor progress with concrete numbers and data",
+        goal: `Create measurable milestone checkpoints for ${goalName} with stakeholder validation`,
+        description: "Define 5-7 specific, quantifiable milestones with clear success criteria and stakeholder sign-off requirements. Each milestone includes resource allocation, risk assessment, and contingency planning.",
         priority: "High", 
-        timeline: "Daily",
-        kpi: "All metrics tracked with 95% accuracy"
+        timeline: "Define milestones in first week, validate bi-weekly",
+        kpi: "90% of milestones achieved on schedule with stakeholder approval rating above 4.5/5",
+        topBetsAlignment: "Customer Centricity - Ensures deliverables meet stakeholder expectations through regular validation",
+        frameworkAlignment: "Effectiveness - Validates that efforts are producing intended business outcomes"
       },
       {
         id: 3,
-        smartType: "Achievable",
-        goal: `Set realistic targets for ${goalName}`,
-        description: "Ensure goals are challenging yet attainable with available resources and constraints",
+        goal: `Develop cross-functional collaboration framework for ${goalName} execution`,
+        description: "Establish clear communication channels, role definitions, and escalation procedures across all teams involved. Include regular sync meetings, shared documentation, and conflict resolution protocols.",
         priority: "Medium",
-        timeline: "Monthly review",
-        kpi: "90% of targets achieved within timeline"
-      },
-      {
-        id: 4,
-        smartType: "Relevant",
-        goal: `Align ${goalName} with business objectives`,
-        description: "Confirm goal alignment with organizational priorities and strategic direction",
-        priority: "High",
-        timeline: "Quarterly",
-        kpi: "100% alignment with company strategy"
-      },
-      {
-        id: 5,
-        smartType: "Time-bound",
-        goal: `Set deadline-driven checkpoints for ${goalName}`,
-        description: "Establish clear deadlines and time-bound milestones for accountability",
-        priority: "Medium",
-        timeline: "Bi-weekly",
-        kpi: "95% of deadlines met on schedule"
+        timeline: "Framework setup in 1 week, monthly optimization reviews",
+        kpi: "Team collaboration score above 4.2/5, 95% meeting attendance, zero unresolved conflicts beyond 48 hours",
+        topBetsAlignment: "Innovation Culture - Fosters collaborative environment that drives creative problem-solving",
+        frameworkAlignment: "Engagement - Increases team satisfaction and reduces project delivery risks through clear communication"
       }
     ];
 
@@ -76,17 +61,6 @@ const AWResults: React.FC<AWResultsProps> = ({ okrData }) => {
       case 'High': return 'bg-red-100 text-red-800 border-red-200';
       case 'Medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'Low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-slate-100 text-slate-800 border-slate-200';
-    }
-  };
-
-  const getSMARTColor = (smartType: string) => {
-    switch (smartType) {
-      case 'Specific': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'Measurable': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Achievable': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'Relevant': return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'Time-bound': return 'bg-red-100 text-red-800 border-red-200';
       default: return 'bg-slate-100 text-slate-800 border-slate-200';
     }
   };
@@ -135,57 +109,69 @@ const AWResults: React.FC<AWResultsProps> = ({ okrData }) => {
         <CardHeader className="bg-gradient-to-r from-slate-900 to-blue-900 text-white">
           <CardTitle className="text-xl font-bold flex items-center gap-3">
             <CheckCircle size={24} />
-            Generated SMART Goals & KPIs
+            Generated SMART Goals & Strategic Alignment
           </CardTitle>
           <p className="text-blue-200 text-sm mt-2">
             Specific • Measurable • Achievable • Relevant • Time-bound
           </p>
         </CardHeader>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>
-                  <th className="text-left p-4 font-semibold text-slate-700">#</th>
-                  <th className="text-left p-4 font-semibold text-slate-700">SMART Type</th>
-                  <th className="text-left p-4 font-semibold text-slate-700">Goal</th>
-                  <th className="text-left p-4 font-semibold text-slate-700">Description</th>
-                  <th className="text-left p-4 font-semibold text-slate-700">Priority</th>
-                  <th className="text-left p-4 font-semibold text-slate-700">Timeline</th>
-                  <th className="text-left p-4 font-semibold text-slate-700">KPI</th>
-                </tr>
-              </thead>
-              <tbody>
-                {smartGoals.map((goal, index) => (
-                  <tr key={goal.id} className={index % 2 === 0 ? 'bg-white' : 'bg-slate-25'}>
-                    <td className="p-4 text-slate-600 font-medium">{goal.id}</td>
-                    <td className="p-4">
-                      <Badge className={`${getSMARTColor(goal.smartType)} font-medium`}>
-                        {goal.smartType}
-                      </Badge>
-                    </td>
-                    <td className="p-4">
-                      <div className="font-semibold text-slate-800">{goal.goal}</div>
-                    </td>
-                    <td className="p-4 text-slate-600 max-w-xs">
-                      {goal.description}
-                    </td>
-                    <td className="p-4">
-                      <Badge className={`${getPriorityColor(goal.priority)} font-medium`}>
-                        {goal.priority}
-                      </Badge>
-                    </td>
-                    <td className="p-4 text-slate-600 font-medium">{goal.timeline}</td>
-                    <td className="p-4">
+        <CardContent className="p-6">
+          <div className="space-y-6">
+            {smartGoals.map((goal) => (
+              <div key={goal.id} className="border border-slate-200 rounded-lg p-6 bg-slate-50">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-bold text-slate-800 text-lg mb-2">Goal #{goal.id}</h3>
+                      <p className="text-slate-900 font-semibold">{goal.goal}</p>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-semibold text-slate-700 mb-1">Description</h4>
+                      <p className="text-slate-600 text-sm">{goal.description}</p>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div>
+                        <h4 className="font-semibold text-slate-700 mb-1">Priority</h4>
+                        <Badge className={`${getPriorityColor(goal.priority)} font-medium`}>
+                          {goal.priority}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-slate-700 mb-1">Timeline</h4>
+                      <p className="text-slate-600 font-medium">{goal.timeline}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-slate-700 mb-1">KPI</h4>
                       <div className="flex items-center gap-2 text-blue-700 font-medium">
                         <TrendingUp size={16} />
                         {goal.kpi}
                       </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-slate-700 mb-1">Company Top Bets Alignment</h4>
+                      <p className="text-slate-600 text-sm bg-blue-50 p-2 rounded border-l-4 border-blue-400">
+                        {goal.topBetsAlignment}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-slate-700 mb-1">3E Framework Alignment</h4>
+                      <p className="text-slate-600 text-sm bg-green-50 p-2 rounded border-l-4 border-green-400">
+                        {goal.frameworkAlignment}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
