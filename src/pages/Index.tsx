@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Header from '@/components/Header';
 import OKRForm from '@/components/OKRForm';
 import AWResults from '@/components/AWResults';
+import Login from '@/components/Login';
 
 interface OKRData {
   goalName: string;
@@ -13,7 +14,12 @@ interface OKRData {
 }
 
 const Index = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [submittedOKR, setSubmittedOKR] = useState<OKRData | null>(null);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
 
   const handleOKRSubmit = (data: OKRData) => {
     console.log('OKR submitted:', data);
@@ -23,6 +29,15 @@ const Index = () => {
   const handleNewOKR = () => {
     setSubmittedOKR(null);
   };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setSubmittedOKR(null);
+  };
+
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
@@ -37,7 +52,7 @@ const Index = () => {
               </h2>
               <p className="text-slate-600 max-w-2xl mx-auto">
                 Create measurable goals aligned with business objectives. Our system will generate 
-                actionable workflows and KPIs to help you achieve success.
+                SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound) and KPIs to help you achieve success.
               </p>
             </div>
             <OKRForm onSubmit={handleOKRSubmit} />
@@ -46,17 +61,25 @@ const Index = () => {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-slate-800 mb-3">
-                Your OKR Action Plan
+                Your SMART Goals Action Plan
               </h2>
               <p className="text-slate-600 mb-4">
-                Below are your generated action workflows and key performance indicators.
+                Below are your generated SMART goals and key performance indicators.
               </p>
-              <button
-                onClick={handleNewOKR}
-                className="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors"
-              >
-                Create New OKR
-              </button>
+              <div className="flex justify-center gap-4">
+                <button
+                  onClick={handleNewOKR}
+                  className="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors"
+                >
+                  Create New OKR
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="text-red-600 hover:text-red-800 font-semibold underline transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
             </div>
             <AWResults okrData={submittedOKR} />
           </div>

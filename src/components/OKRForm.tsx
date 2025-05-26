@@ -132,7 +132,7 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
               disabled={!isFormValid}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold transition-colors duration-200 disabled:bg-slate-300 disabled:cursor-not-allowed"
             >
-              Generate Action Workflows (AWs) & KPIs
+              Generate SMART Goals & KPIs
             </Button>
           </div>
         </form>
