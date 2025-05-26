@@ -6,7 +6,8 @@ import AWResults from '@/components/AWResults';
 import Login from '@/components/Login';
 
 interface OKRData {
-  goalName: string;
+  department: string;
+  jobTitle: string;
   goalDescription: string;
   keyResult: string;
   managersGoal: string;

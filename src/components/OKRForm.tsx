@@ -5,10 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, Target, Users, FileText, CheckCircle } from 'lucide-react';
+import { Calendar, Target, Users, FileText, CheckCircle, Building2, Briefcase } from 'lucide-react';
 
 interface OKRData {
-  goalName: string;
+  department: string;
+  jobTitle: string;
   goalDescription: string;
   keyResult: string;
   managersGoal: string;
@@ -21,7 +22,8 @@ interface OKRFormProps {
 
 const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<OKRData>({
-    goalName: '',
+    department: '',
+    jobTitle: '',
     goalDescription: '',
     keyResult: '',
     managersGoal: '',
@@ -54,32 +56,46 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="goalName" className="text-slate-700 font-semibold flex items-center gap-2">
-                <FileText size={16} className="text-blue-600" />
-                Goal Name
+              <Label htmlFor="department" className="text-slate-700 font-semibold flex items-center gap-2">
+                <Building2 size={16} className="text-blue-600" />
+                Department
               </Label>
               <Input
-                id="goalName"
-                value={formData.goalName}
-                onChange={(e) => handleInputChange('goalName', e.target.value)}
-                placeholder="Enter your primary objective"
+                id="department"
+                value={formData.department}
+                onChange={(e) => handleInputChange('department', e.target.value)}
+                placeholder="Enter your department"
                 className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="managersGoal" className="text-slate-700 font-semibold flex items-center gap-2">
-                <Users size={16} className="text-blue-600" />
-                Manager's Goal
+              <Label htmlFor="jobTitle" className="text-slate-700 font-semibold flex items-center gap-2">
+                <Briefcase size={16} className="text-blue-600" />
+                Job Title
               </Label>
               <Input
-                id="managersGoal"
-                value={formData.managersGoal}
-                onChange={(e) => handleInputChange('managersGoal', e.target.value)}
-                placeholder="Aligned manager's objective"
+                id="jobTitle"
+                value={formData.jobTitle}
+                onChange={(e) => handleInputChange('jobTitle', e.target.value)}
+                placeholder="Enter your job title"
                 className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="managersGoal" className="text-slate-700 font-semibold flex items-center gap-2">
+              <Users size={16} className="text-blue-600" />
+              Manager's Goal
+            </Label>
+            <Input
+              id="managersGoal"
+              value={formData.managersGoal}
+              onChange={(e) => handleInputChange('managersGoal', e.target.value)}
+              placeholder="Aligned manager's objective"
+              className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+            />
           </div>
 
           <div className="space-y-2">
