@@ -15,44 +15,46 @@ interface OKRData {
 
 interface AWResultsProps {
   okrData: OKRData;
+  aiResult?: any;
 }
 
 const AWResults: React.FC<AWResultsProps> = ({ okrData }) => {
-  const generateSMARTGoals = (department: string, jobTitle: string, keyResult: string) => {
-    const smartGoals = [
-      {
-        id: 1,
-        goal: `Establish weekly progress tracking system for ${department} ${jobTitle} with automated reporting`,
-        description: "Implement a comprehensive tracking system that monitors key metrics daily and generates automated weekly reports to stakeholders, ensuring transparency and accountability throughout the project lifecycle.",
-        kpi: "100% of weekly reports delivered on time with 95% data accuracy",
-        topBetsAlignment: "Operational Excellence - Streamlines decision-making through data-driven insights",
-        frameworkAlignment: "Efficiency - Reduces manual reporting time by 75% while improving data quality",
-        coreValues: "Accountability & Transparency - Demonstrates commitment to honest communication and taking ownership of results through consistent, accurate reporting"
-      },
-      {
-        id: 2,
-        goal: `Create measurable milestone checkpoints for ${department} objectives with stakeholder validation`,
-        description: "Define 5-7 specific, quantifiable milestones with clear success criteria and stakeholder sign-off requirements. Each milestone includes resource allocation, risk assessment, and contingency planning.",
-        kpi: "90% of milestones achieved on schedule with stakeholder approval rating above 4.5/5",
-        topBetsAlignment: "Customer Centricity - Ensures deliverables meet stakeholder expectations through regular validation",
-        frameworkAlignment: "Effectiveness - Validates that efforts are producing intended business outcomes",
-        coreValues: "Excellence & Customer Focus - Strives for high-quality deliverables that exceed expectations while maintaining strong stakeholder relationships"
-      },
-      {
-        id: 3,
-        goal: `Develop cross-functional collaboration framework for ${department} execution`,
-        description: "Establish clear communication channels, role definitions, and escalation procedures across all teams involved. Include regular sync meetings, shared documentation, and conflict resolution protocols.",
-        kpi: "Team collaboration score above 4.2/5, 95% meeting attendance, zero unresolved conflicts beyond 48 hours",
-        topBetsAlignment: "Innovation Culture - Fosters collaborative environment that drives creative problem-solving",
-        frameworkAlignment: "Engagement - Increases team satisfaction and reduces project delivery risks through clear communication",
-        coreValues: "Collaboration & Respect - Promotes inclusive teamwork and values diverse perspectives while maintaining mutual respect across all interactions"
-      }
-    ];
+  // const generateSMARTGoals = (department: string, jobTitle: string, keyResult: string) => {
+    // const smartGoals = [
+    //   {
+    //     id: 1,
+    //     goal: `Establish weekly progress tracking system for ${department} ${jobTitle} with automated reporting`,
+    //     description: "Implement a comprehensive tracking system that monitors key metrics daily and generates automated weekly reports to stakeholders, ensuring transparency and accountability throughout the project lifecycle.",
+    //     kpi: "100% of weekly reports delivered on time with 95% data accuracy",
+    //     topBetsAlignment: "Operational Excellence - Streamlines decision-making through data-driven insights",
+    //     frameworkAlignment: "Efficiency - Reduces manual reporting time by 75% while improving data quality",
+    //     coreValues: "Accountability & Transparency - Demonstrates commitment to honest communication and taking ownership of results through consistent, accurate reporting"
+    //   },
+    //   {
+    //     id: 2,
+    //     goal: `Create measurable milestone checkpoints for ${department} objectives with stakeholder validation`,
+    //     description: "Define 5-7 specific, quantifiable milestones with clear success criteria and stakeholder sign-off requirements. Each milestone includes resource allocation, risk assessment, and contingency planning.",
+    //     kpi: "90% of milestones achieved on schedule with stakeholder approval rating above 4.5/5",
+    //     topBetsAlignment: "Customer Centricity - Ensures deliverables meet stakeholder expectations through regular validation",
+    //     frameworkAlignment: "Effectiveness - Validates that efforts are producing intended business outcomes",
+    //     coreValues: "Excellence & Customer Focus - Strives for high-quality deliverables that exceed expectations while maintaining strong stakeholder relationships"
+    //   },
+    //   {
+    //     id: 3,
+    //     goal: `Develop cross-functional collaboration framework for ${department} execution`,
+    //     description: "Establish clear communication channels, role definitions, and escalation procedures across all teams involved. Include regular sync meetings, shared documentation, and conflict resolution protocols.",
+    //     kpi: "Team collaboration score above 4.2/5, 95% meeting attendance, zero unresolved conflicts beyond 48 hours",
+    //     topBetsAlignment: "Innovation Culture - Fosters collaborative environment that drives creative problem-solving",
+    //     frameworkAlignment: "Engagement - Increases team satisfaction and reduces project delivery risks through clear communication",
+    //     coreValues: "Collaboration & Respect - Promotes inclusive teamwork and values diverse perspectives while maintaining mutual respect across all interactions"
+    //   }
+    // ];
 
-    return smartGoals;
-  };
+    // return smartGoals;
+  // };
 
-  const smartGoals = generateSMARTGoals(okrData.department, okrData.jobTitle, okrData.keyResult);
+  // const smartGoals = generateSMARTGoals(okrData.department, okrData.jobTitle, okrData.keyResult);
+  const smartGoals = okrData
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
