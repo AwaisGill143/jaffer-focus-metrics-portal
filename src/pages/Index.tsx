@@ -17,29 +17,23 @@ interface OKRData {
 const Index = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [submittedOKR, setSubmittedOKR] = useState<OKRData | null>(null);
-  const [aiResult, setAiResult] = useState<any>(null);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
-  const handleOKRSubmit = (data: OKRData, result?: any) => {
+  const handleOKRSubmit = (data: OKRData) => {
     console.log('OKR submitted:', data);
     setSubmittedOKR(data);
-    if (result) {
-      console.log('AI result received:', result);
-      setAiResult(result);
-    }
   };
+
   const handleNewOKR = () => {
     setSubmittedOKR(null);
-    setAiResult(null);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setSubmittedOKR(null);
-    setAiResult(null);
   };
 
   if (!isLoggedIn) {
@@ -51,9 +45,7 @@ const Index = () => {
       <Header />
       
       <main className="py-8 px-4">
-
-        {/* this condition will occur when we have to prompt the AI to generate the goals  */}       
-         {!submittedOKR ? (
+        {!submittedOKR ? (
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-slate-800 mb-3">
@@ -90,36 +82,15 @@ const Index = () => {
                 </button>
               </div>
             </div>
-            
-            {/* Display the generated SMART goal */}
-            <div className="mt-6 p-6 bg-blue-50 border border-blue-200 rounded-md">
-              <h3 className="text-xl font-semibold text-blue-800 mb-3">Generated SMART Goal</h3>
-              <div className="prose prose-blue max-w-none">
-                {aiResult ? (
-                  typeof aiResult === 'string' ? (
-                    <p>{aiResult}</p>
-                  ) : (
-                    Object.entries(aiResult).map(([key, value]) => (
-                      <div key={key} className="mb-4">
-                        <h4 className="text-lg font-medium text-slate-800">{key}</h4>
-                        <p className="text-slate-600">{String(value)}</p>
-                      </div>
-                    ))
-                  )
-                ) : (
-                  <p>Your goal has been submitted successfully!</p>
-                )}
-              </div>
-            </div>
+            <AWResults okrData={submittedOKR} />
           </div>
         )}
-        
       </main>
 
       <footer className="bg-slate-900 text-white py-6 mt-12">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-300">
-            © {new Date().getFullYear()} Jaffer Business System - OKR Management Platform
+            © 2024 Jaffer Business System - OKR Management Platform
           </p>
         </div>
       </footer>

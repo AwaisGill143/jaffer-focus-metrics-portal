@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,7 +17,7 @@ interface OKRData {
 }
 
 interface OKRFormProps {
-  onSubmit: (data: OKRData, aiResult?: any) => void;
+  onSubmit: (data: OKRData) => void;
 }
 
 const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
@@ -30,9 +29,6 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
     managersGoal: '',
     dueDate: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<any>(null);
 
   const handleInputChange = (field: keyof OKRData, value: string) => {
     setFormData(prev => ({
@@ -40,40 +36,12 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
       [field]: value
     }));
   };
-  const handleSubmit = async (e: React.FormEvent) => {
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    
-    try {
-      // First, call the onSubmit prop from parent component
-      onSubmit(formData);
-      
-      // Then make the API call
-      // response will be a string
-      const response = await axios.post('http://localhost:5000/api/generate-smart-goal', {
-        goal: formData.goalDescription,
-        deadline: formData.dueDate,
-        department: formData.department,
-        jobTitle: formData.jobTitle,
-        keyResult: formData.keyResult,
-        managersGoal: formData.managersGoal
-      });      if (response.data) {
-        console.log('Generated SMART goal:', response.data);
-        setResult(response.data);
-        // Also pass the result back to the parent component
-        onSubmit(formData, response.data);
-      } else {
-        setError('Failed to generate SMART goal');
-      }
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'An error occurred while connecting to the server');
-      console.error('Error:', err);
-    } finally {
-      setLoading(false);
-    }
+    onSubmit(formData);
   };
-      //  this condition will check if all fields are filled
+
   const isFormValid = Object.values(formData).every(value => value.trim() !== '');
 
   return (
@@ -172,21 +140,18 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
               onChange={(e) => handleInputChange('dueDate', e.target.value)}
               className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
             />
-          </div>          <div className="pt-4">
+          </div>
+
+          <div className="pt-4">
             <Button
               type="submit"
-              disabled={!isFormValid || loading}
+              disabled={!isFormValid}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold transition-colors duration-200 disabled:bg-slate-300 disabled:cursor-not-allowed"
             >
-              {loading ? 'Generating...' : 'Generate SMART Goals & KPIs'}
+              Generate SMART Goals & KPIs
             </Button>
-          </div>        </form>
-        
-        {error && (
-          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-md text-red-600">
-            {error}
           </div>
-        )}
+        </form>
       </CardContent>
     </Card>
   );
