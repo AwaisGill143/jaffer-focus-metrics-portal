@@ -18,28 +18,59 @@ interface OKRData {
 
 interface OKRFormProps {
   onSubmit: (data: OKRData) => void;
+  isLoading?: boolean;
 }
 
-const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
-  const [formData, setFormData] = useState<OKRData>({
-    department: '',
-    jobTitle: '',
-    goalDescription: '',
-    keyResult: '',
-    managersGoal: '',
-    dueDate: ''
+const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false }) => {
+  const [formData, setFormData] = useState<OKRData>(() => {
+    // Load from localStorage if available
+    const savedData = localStorage.getItem('okrFormData');
+    if (savedData) {
+      try {
+        return JSON.parse(savedData);
+      } catch (error) {
+        console.error('Error parsing saved form data:', error);
+      }
+    }
+    
+    // Default initial state
+    return {
+      department: '',
+      jobTitle: '',
+      goalDescription: '',
+      keyResult: '',
+      managersGoal: '',
+      dueDate: ''
+    };
   });
-
   const handleInputChange = (field: keyof OKRData, value: string) => {
-    setFormData(prev => ({
-      ...prev,
+    const updatedFormData = {
+      ...formData,
       [field]: value
-    }));
+    };
+    
+    setFormData(updatedFormData);
+    
+    // Save to localStorage
+    localStorage.setItem('okrFormData', JSON.stringify(updatedFormData));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
+  };
+
+  const handleReset = () => {
+    const emptyFormData = {
+      department: '',
+      jobTitle: '',
+      goalDescription: '',
+      keyResult: '',
+      managersGoal: '',
+      dueDate: ''
+    };
+    
+    setFormData(emptyFormData);
+    localStorage.removeItem('okrFormData');
   };
 
   const isFormValid = Object.values(formData).every(value => value.trim() !== '');
@@ -140,16 +171,24 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit }) => {
               onChange={(e) => handleInputChange('dueDate', e.target.value)}
               className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
             />
-          </div>
-
-          <div className="pt-4">
+          </div>          <div className="pt-4">
             <Button
               type="submit"
-              disabled={!isFormValid}
+              disabled={!isFormValid || isLoading}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold transition-colors duration-200 disabled:bg-slate-300 disabled:cursor-not-allowed"
             >
-              Generate SMART Goals & KPIs
+              {isLoading ? 'Generating...' : 'Generate SMART Goals & KPIs'}
             </Button>
+            
+            <div className="mt-3 text-center">
+              <button 
+                type="button"
+                onClick={handleReset}
+                className="text-slate-600 hover:text-red-600 text-sm font-medium transition-colors"
+              >
+                Reset Form
+              </button>
+            </div>
           </div>
         </form>
       </CardContent>

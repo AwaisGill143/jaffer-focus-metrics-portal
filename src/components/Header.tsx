@@ -1,5 +1,6 @@
 
 import React from 'react';
+import ApiStatus from './ApiStatus';
 
 const Header = () => {
   return (
@@ -16,10 +17,12 @@ const Header = () => {
             <div>
               <h1 className="text-3xl font-bold text-white mb-2">
                 Jaffer Business System
-              </h1>
-              <p className="text-blue-200 text-lg">
+              </h1>              <p className="text-blue-200 text-lg">
                 OKR Management Platform - Objectives, Key Results & SMART Goals
               </p>
+              <div className="mt-2">
+                <ApiStatus apiUrl="http://localhost:5000" />
+              </div>
             </div>
           </div>
           {/* Random decorative image */}

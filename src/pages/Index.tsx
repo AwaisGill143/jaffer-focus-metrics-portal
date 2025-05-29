@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import Header from '@/components/Header';
-import OKRForm from '@/components/OKRForm';
-import AWResults from '@/components/AWResults';
+import OKRContainer from '@/components/OKRContainer';
+import SmartGoalResults from '@/components/SmartGoalResults';
 import Login from '@/components/Login';
 
 interface OKRData {
@@ -14,26 +13,32 @@ interface OKRData {
   dueDate: string;
 }
 
-const Index = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Index = () => {  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [submittedOKR, setSubmittedOKR] = useState<OKRData | null>(null);
+  const [aiResult, setAiResult] = useState<any>(null);
+  const [isFallbackData, setIsFallbackData] = useState(false);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
-
-  const handleOKRSubmit = (data: OKRData) => {
+  const handleOKRSubmit = (data: OKRData, result?: any, isFallback?: boolean) => {
     console.log('OKR submitted:', data);
     setSubmittedOKR(data);
-  };
-
-  const handleNewOKR = () => {
+    if (result) {
+      console.log('AI result received:', result);
+      setAiResult(result);
+      setIsFallbackData(!!isFallback);
+    }
+  };  const handleNewOKR = () => {
     setSubmittedOKR(null);
+    setAiResult(null);
+    setIsFallbackData(false);
   };
-
   const handleLogout = () => {
     setIsLoggedIn(false);
     setSubmittedOKR(null);
+    setAiResult(null);
+    setIsFallbackData(false);
   };
 
   if (!isLoggedIn) {
@@ -52,11 +57,10 @@ const Index = () => {
                 Define Your Objectives & Key Results
               </h2>
               <p className="text-slate-600 max-w-2xl mx-auto">
-                Create measurable goals aligned with business objectives. Our system will generate 
+                Create measurable goals aligned with business objectives. Our system will generate
                 SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound) and KPIs to help you achieve success.
-              </p>
-            </div>
-            <OKRForm onSubmit={handleOKRSubmit} />
+              </p>            </div>
+            <OKRContainer onSubmit={handleOKRSubmit} />
           </div>
         ) : (
           <div className="max-w-7xl mx-auto">
@@ -79,10 +83,9 @@ const Index = () => {
                   className="text-red-600 hover:text-red-800 font-semibold underline transition-colors"
                 >
                   Logout
-                </button>
-              </div>
+                </button>              </div>
             </div>
-            <AWResults okrData={submittedOKR} />
+            <SmartGoalResults okrData={submittedOKR} aiResult={aiResult} isFallback={isFallbackData} />
           </div>
         )}
       </main>
