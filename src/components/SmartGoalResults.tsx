@@ -111,13 +111,12 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
             )}
           </CardHeader>
           <CardContent className="p-6">
-            <div className="space-y-6">
-              {typeof aiResult === 'string' ? (
+            <div className="space-y-6">              {typeof aiResult === 'string' ? (
                 <div className="border border-slate-200 rounded-lg p-6 bg-slate-50">
                   <p className="text-slate-800 whitespace-pre-line">{aiResult}</p>
                 </div>
-              ) : Array.isArray(aiResult) ? (
-                aiResult.map((goal, index) => (
+              ) : Array.isArray(aiResult?.goals) ? (
+                aiResult.goals.map((goal, index) => (
                   <div key={index} className="border border-slate-200 rounded-lg p-6 bg-slate-50">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       <div className="space-y-4">
@@ -174,13 +173,14 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                   </div>
                 ))
               ) : (
-                Object.entries(aiResult).map(([key, value], index) => (
-                  <div key={index} className="border border-slate-200 rounded-lg p-6 bg-slate-50">
-                    <h3 className="font-bold text-slate-800 text-lg mb-2">{key}</h3>
-                    <p className="text-slate-600 whitespace-pre-line">{String(value)}</p>
-                  </div>
-                ))
+                <div className="text-red-600 font-medium">
+                  No SMART goals found in response.
+                </div>
               )}
+
+              
+            
+              
             </div>
           </CardContent>
         </Card>

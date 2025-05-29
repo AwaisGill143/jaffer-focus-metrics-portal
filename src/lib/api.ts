@@ -19,9 +19,9 @@ interface OKRData {
  * @returns Promise containing the AI response
  */
 export const generateSmartGoal = async (data: OKRData, retryCount = 2) => {try {
-    const response = await axios.post(`${API_BASE_URL}/api/generate-smart-goal`, {
-      goal: data.goalDescription,
-      deadline: data.dueDate,
+    const response = await axios.post(`${API_BASE_URL}/api/generate-smart-goals`, {
+      goalDescription: data.goalDescription,
+      dueDate: data.dueDate,
       department: data.department,
       jobTitle: data.jobTitle,
       keyResult: data.keyResult,
