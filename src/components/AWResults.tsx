@@ -18,7 +18,11 @@ interface AWResultsProps {
 }
 
 
-  
+  /*
+  aiResults will have following rows:
+  ['title', 'description', 'kpi', 'companyTopBetAlignment', 'framework3E', 'coreValue']
+
+  */
 
 const AWResults: React.FC<AWResultsProps> = ({ okrData, aiResult }) => {
   return (
@@ -92,6 +96,7 @@ const AWResults: React.FC<AWResultsProps> = ({ okrData, aiResult }) => {
                         <div>
                           <h3 className="font-bold text-slate-800 text-lg mb-2">Goal #{goal.id || index + 1}</h3>
                           <p className="text-slate-900 font-semibold">{goal.goal}</p>
+                          <h2>sladkfja;sdklfjads;kl</h2>
                         </div>
                         <div>
                           <h4 className="font-semibold text-slate-700 mb-1">Description</h4>
@@ -109,13 +114,13 @@ const AWResults: React.FC<AWResultsProps> = ({ okrData, aiResult }) => {
                         <div>
                           <h4 className="font-semibold text-slate-700 mb-1">Company Top Bets Alignment</h4>
                           <p className="text-slate-600 text-sm bg-blue-50 p-2 rounded border-l-4 border-blue-400">
-                            {goal.topBetsAlignment}
+                            {goal.companyTopBetAlignment}
                           </p>
                         </div>
                         <div>
                           <h4 className="font-semibold text-slate-700 mb-1">3E Framework Alignment</h4>
                           <p className="text-slate-600 text-sm bg-green-50 p-2 rounded border-l-4 border-green-400">
-                            {goal.frameworkAlignment}
+                            {goal.framework3E}
                           </p>
                         </div>
                         <div>
@@ -124,7 +129,7 @@ const AWResults: React.FC<AWResultsProps> = ({ okrData, aiResult }) => {
                             Core Values Alignment
                           </h4>
                           <p className="text-slate-600 text-sm bg-red-50 p-2 rounded border-l-4 border-red-400">
-                            {goal.coreValues}
+                            {goal.coreValue}
                           </p>
                         </div>
                       </div>

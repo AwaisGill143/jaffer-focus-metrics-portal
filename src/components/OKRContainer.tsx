@@ -13,6 +13,7 @@ interface OKRData {
   managersGoal: string;
   dueDate: string;
 }
+  // ['title', 'description', 'kpi', 'companyTopBetAlignment', 'framework3E', 'coreValue']
 
 interface OKRContainerProps {
   onSubmit: (data: OKRData, aiResult?: any, isFallback?: boolean) => void;
@@ -121,6 +122,7 @@ const OKRContainer: React.FC<OKRContainerProps> = ({ onSubmit }) => {
                           <div>
                             <h4 className="font-semibold text-slate-700 mb-1">Description</h4>
                             <p className="text-slate-600 text-sm">{goal.description}</p>
+                            <h2>dsfasd</h2>
                           </div>
                         )}
                         {goal.kpi && (

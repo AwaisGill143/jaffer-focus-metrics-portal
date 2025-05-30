@@ -168,6 +168,35 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                             </p>
                           </div>
                         )}
+                        {goal.topBetsAlignment && (
+                          <div>
+                            <h4 className="font-semibold text-slate-700 mb-1">Company Top Bets Alignment</h4>
+                            <p className="text-slate-600 text-sm bg-blue-50 p-2 rounded border-l-4 border-blue-400">
+                              {goal.topBetsAlignment}
+                            </p>
+                          </div>
+                        )}
+
+                        {goal.framework3E && (
+                          <div>
+                            <h4 className="font-semibold text-slate-700 mb-1">3E Framework Alignment</h4>
+                            <p className="text-slate-600 text-sm bg-green-50 p-2 rounded border-l-4 border-green-400">
+                              {goal.framework3E}
+                            </p>
+                          </div>
+                        )}
+
+                        {goal.coreValue && (
+                          <div>
+                            <h4 className="font-semibold text-slate-700 mb-1 flex items-center gap-2">
+                              <Heart size={16} className="text-red-500" />
+                              Core Values Alignment
+                            </h4>
+                            <p className="text-slate-600 text-sm bg-red-50 p-2 rounded border-l-4 border-red-400">
+                              {goal.coreValue}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
