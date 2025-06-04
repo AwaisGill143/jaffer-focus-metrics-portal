@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogIn, Eye, EyeOff } from 'lucide-react';
+import { LogIn, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { loginUser } from '@/lib/auth';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface LoginProps {
   onLogin: () => void;
@@ -15,18 +17,43 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
+    
+    // Clear error when user starts typing again
+    if (error) setError(null);
+  };
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
-      onLogin();
-    }, 1000);
-  };
+    setError(null);
 
+    try {
+      // Send login request to backend
+      const response = await loginUser({ email, password });
+      
+      if (response.success) {
+        // Login successful
+        onLogin();
+      } else {
+        // Login failed
+        setError(response.error || 'Invalid email or password');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
   return (
@@ -49,6 +76,13 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </p>
         </CardHeader>
         <CardContent className="p-8">
+          {error && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-slate-700 font-semibold">
@@ -56,9 +90,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleInputChange}
                 placeholder="Enter your email"
                 className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                 required
@@ -72,9 +107,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <div className="relative">
                 <Input
                   id="password"
+                  name="password" 
                   type={showPassword ? 'text' : 'password'}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handleInputChange}
                   placeholder="Enter your password"
                   className="border-slate-300 focus:border-blue-500 focus:ring-blue-500 pr-10"
                   required
@@ -100,7 +136,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
           <div className="mt-6 text-center">
             <p className="text-slate-600 text-sm">
-              Demo credentials: any email and password will work
+              For demo: use email "admin@jbs.com" and password "password123"
             </p>
           </div>
         </CardContent>

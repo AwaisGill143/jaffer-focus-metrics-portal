@@ -21,56 +21,36 @@ interface OKRFormProps {
   isLoading?: boolean;
 }
 
-const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false }) => {
-  const [formData, setFormData] = useState<OKRData>(() => {
-    // Load from localStorage if available
-    const savedData = localStorage.getItem('okrFormData');
-    if (savedData) {
-      try {
-        return JSON.parse(savedData);
-      } catch (error) {
-        console.error('Error parsing saved form data:', error);
-      }
-    }
-    
-    // Default initial state
-    return {
-      department: '',
-      jobTitle: '',
-      goalDescription: '',
-      keyResult: '',
-      managersGoal: '',
-      dueDate: ''
-    };
-  });
+const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false }) => {  
+  const [formData, setFormData] = useState<OKRData>({
+    department: '',
+    jobTitle: '',
+    goalDescription: '',
+    keyResult: '',
+    managersGoal: '',
+    dueDate: ''
+  });  
   const handleInputChange = (field: keyof OKRData, value: string) => {
-    const updatedFormData = {
+    setFormData({
       ...formData,
       [field]: value
-    };
-    
-    setFormData(updatedFormData);
-    
-    // Save to localStorage
-    localStorage.setItem('okrFormData', JSON.stringify(updatedFormData));
+    });
   };
   const handleSubmit = (e: React.FormEvent) => {
+
+
     e.preventDefault();
     onSubmit(formData);
   };
-
   const handleReset = () => {
-    const emptyFormData = {
+    setFormData({
       department: '',
       jobTitle: '',
       goalDescription: '',
       keyResult: '',
       managersGoal: '',
       dueDate: ''
-    };
-    
-    setFormData(emptyFormData);
-    localStorage.removeItem('okrFormData');
+    });
   };
 
   const isFormValid = Object.values(formData).every(value => value.trim() !== '');

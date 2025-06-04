@@ -168,11 +168,11 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                             </p>
                           </div>
                         )}
-                        {goal.topBetsAlignment && (
+                        {goal.companyTopBetAlignment && (
                           <div>
                             <h4 className="font-semibold text-slate-700 mb-1">Company Top Bets Alignment</h4>
                             <p className="text-slate-600 text-sm bg-blue-50 p-2 rounded border-l-4 border-blue-400">
-                              {goal.topBetsAlignment}
+                              {goal.companyTopBetAlignment}
                             </p>
                           </div>
                         )}
