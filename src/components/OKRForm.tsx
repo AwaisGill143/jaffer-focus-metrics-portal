@@ -97,18 +97,18 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
               />
             </div>
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="managersGoal" className="text-slate-700 font-semibold flex items-center gap-2">
               <Users size={16} className="text-blue-600" />
               Manager's Goal
             </Label>
-            <Input
+            <Textarea
               id="managersGoal"
               value={formData.managersGoal}
               onChange={(e) => handleInputChange('managersGoal', e.target.value)}
               placeholder="Aligned manager's objective"
-              className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+              rows={4}
+              className="border-slate-300 focus:border-blue-500 focus:ring-blue-500 resize-y min-h-[80px]"
             />
           </div>
 
