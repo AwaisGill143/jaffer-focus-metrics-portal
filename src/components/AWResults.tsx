@@ -2,20 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, TrendingUp, Calendar, Target, Heart } from 'lucide-react';
-
-interface OKRData {
-  department: string;
-  jobTitle: string;
-  goalDescription: string;
-  keyResult: string;
-  managersGoal: string;
-  dueDate: string;
-}
-
-interface AWResultsProps {
-  okrData: OKRData;
-  aiResult?: any;
-}
+import {OKRData, AWResultsProps} from '@/types/index'; // Assuming you have a types file for OKRData and AWResultsProps
 
 
   /*

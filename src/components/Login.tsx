@@ -7,14 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogIn, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { loginUser } from '@/lib/auth';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import {LoginProps} from '@/types/user'; // Assuming you have a types file for UserProp and LoginProps
 
-interface LoginProps {
-  onLogin: () => void;
-}
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('sibtain.naqvi@hysabkytab.com');
+  const [password, setPassword] = useState('1234');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +40,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       
       if (response.success) {
         // Login successful
-        onLogin();
+        console.log("User returned with:", response.user)
+        onLogin(response.user); // when the user is successfully logged in, call the onLogin prop which is passed from the parent component
       } else {
         // Login failed
         setError(response.error || 'Invalid email or password');
@@ -136,7 +135,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
           <div className="mt-6 text-center">
             <p className="text-slate-600 text-sm">
-              For demo: use email "admin@jbs.com" and password "password123"
+              For demo: use email "sibtain.naqvi@hysabkytab.com" and password "1234"
             </p>
           </div>
         </CardContent>

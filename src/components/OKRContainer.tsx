@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
 import OKRForm from './OKRForm';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from './ui/LoadingSpinner';
 import { generateSmartGoal, retry } from '@/lib/api';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, Heart } from 'lucide-react';
-
-interface OKRData {
-  department: string;
-  jobTitle: string;
-  goalDescription: string;
-  keyResult: string;
-  managersGoal: string;
-  dueDate: string;
-}
+import { OKRData, OKRContainerProps } from '@/types/index';
   // ['title', 'description', 'kpi', 'companyTopBetAlignment', 'framework3E', 'coreValue']
 
-interface OKRContainerProps {
-  onSubmit: (data: OKRData, aiResult?: any, isFallback?: boolean) => void;
-}
 
-const OKRContainer: React.FC<OKRContainerProps> = ({ onSubmit }) => {
+
+const OKRContainer: React.FC<OKRContainerProps> = ({ onSubmit, user }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
@@ -75,10 +65,9 @@ const OKRContainer: React.FC<OKRContainerProps> = ({ onSubmit }) => {
       setLoading(false);
     }
   };
-
   return (
     <div className="space-y-6">
-      <OKRForm onSubmit={handleFormSubmit} isLoading={loading} />
+      <OKRForm onSubmit={handleFormSubmit} isLoading={loading} user={user} />
 
       {loading && (
         <div className="mt-6 p-6 bg-blue-50 border border-blue-200 rounded-md flex flex-col items-center justify-center">

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AlertCircle, CheckCircle, Wifi, WifiOff } from 'lucide-react';
-
+import {ApiStatusProps} from '@/types/api'; // Assuming you have a types file for ApiStatusProps
 const API_BASE_URL = 'http://localhost:5000';
 
-interface ApiStatusProps {
-  apiUrl: string;
-  pollingInterval?: number; // in ms
-}
+
 
 const ApiStatus: React.FC<ApiStatusProps> = ({ 
   apiUrl, 

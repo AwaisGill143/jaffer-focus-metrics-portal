@@ -1,35 +1,39 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Target, Users, FileText, CheckCircle, Building2, Briefcase } from 'lucide-react';
+import { OKRData, OKRFormProps } from '@/types/index';
+import { UserProp } from '@/types/user'; // Assuming you have a types file for UserProp
 
-interface OKRData {
-  department: string;
-  jobTitle: string;
-  goalDescription: string;
-  keyResult: string;
-  managersGoal: string;
-  dueDate: string;
-}
 
-interface OKRFormProps {
-  onSubmit: (data: OKRData) => void;
-  isLoading?: boolean;
-}
 
-const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false }) => {  
+
+const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) => {
+  console.log('OKRForm user:', user);
   const [formData, setFormData] = useState<OKRData>({
-    department: '',
-    jobTitle: '',
+    department: user?.department || '',
+    jobTitle: user?.designation || '',
     goalDescription: '',
     keyResult: '',
-    managersGoal: '',
+    managersGoal: user?.managers_goal || '',
     dueDate: ''
-  });  
+  });
+  
+  // Update form data when user prop changes
+  useEffect(() => {
+    if (user) {
+      setFormData(prevData => ({
+        ...prevData,
+        department: user.department || prevData.department,
+        jobTitle: user.designation || prevData.jobTitle,
+        managersGoal: user.managers_goal || prevData.managersGoal
+      }));
+    }
+  }, [user]);
+  
   const handleInputChange = (field: keyof OKRData, value: string) => {
     setFormData({
       ...formData,
@@ -41,14 +45,13 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false }) => {
 
     e.preventDefault();
     onSubmit(formData);
-  };
-  const handleReset = () => {
+  };  const handleReset = () => {
     setFormData({
-      department: '',
-      jobTitle: '',
+      department: user?.department || '',
+      jobTitle: user?.designation || '',
       goalDescription: '',
       keyResult: '',
-      managersGoal: '',
+      managersGoal: user?.managers_goal || '',
       dueDate: ''
     });
   };
