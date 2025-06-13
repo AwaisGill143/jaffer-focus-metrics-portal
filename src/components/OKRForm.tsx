@@ -45,7 +45,11 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
 
     e.preventDefault();
     onSubmit(formData);
-  };  const handleReset = () => {
+
+  };  
+  
+  
+  const handleReset = () => {
     setFormData({
       department: user?.department || '',
       jobTitle: user?.designation || '',
