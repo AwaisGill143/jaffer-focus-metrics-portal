@@ -18,6 +18,7 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
     jobTitle: user?.designation || '',
     goalDescription: '',
     keyResult: '',
+    startDate: new Date().toISOString().split('T')[0], // Default to today
     managersGoal: user?.managers_goal || '',
     dueDate: ''
   });
@@ -56,6 +57,7 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
       goalDescription: '',
       keyResult: '',
       managersGoal: user?.managers_goal || '',
+      startDate: '',
       dueDate: ''
     });
   };
@@ -143,22 +145,39 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
               placeholder="Define measurable outcomes that indicate goal achievement (include specific metrics, percentages, or quantities)"
               rows={3}
               className="border-slate-300 focus:border-blue-500 focus:ring-blue-500 resize-none"
-            />
-          </div>
+            />          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="dueDate" className="text-slate-700 font-semibold flex items-center gap-2">
-              <Calendar size={16} className="text-blue-600" />
-              Due Date
-            </Label>
-            <Input
-              id="dueDate"
-              type="date"
-              value={formData.dueDate}
-              onChange={(e) => handleInputChange('dueDate', e.target.value)}
-              className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
-            />
-          </div>          <div className="pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="startDate" className="text-slate-700 font-semibold flex items-center gap-2">
+                <Calendar size={16} className="text-blue-600" />
+                Start Date
+              </Label>
+              <Input
+                id="startDate"
+                type="date"
+                value={formData.startDate}
+                onChange={(e) => handleInputChange('startDate', e.target.value)}
+                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dueDate" className="text-slate-700 font-semibold flex items-center gap-2">
+                <Calendar size={16} className="text-red-600" />
+                Due Date
+              </Label>
+              <Input
+                id="dueDate"
+                type="date"
+                value={formData.dueDate}
+                onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+          </div>      
+              
+          <div className="pt-4">
             <Button
               type="submit"
               disabled={!isFormValid || isLoading}

@@ -8,6 +8,7 @@ export interface OKRData {
   goalDescription: string;
   keyResult: string;
   managersGoal: string;
+  startDate: string;
   dueDate: string;
 }
 

@@ -1,16 +1,8 @@
 import axios from 'axios';
 import { generateFallbackGoals } from './fallback';
-
+import { OKRData } from '@/types';
 const API_BASE_URL = 'http://localhost:5000';
 
-interface OKRData {
-  department: string;
-  jobTitle: string;
-  goalDescription: string;
-  keyResult: string;
-  managersGoal: string;
-  dueDate: string;
-}
 
 /**
  * Sends the OKR data to the backend and gets AI-generated SMART goals
@@ -24,6 +16,7 @@ export const generateSmartGoal = async (data: OKRData, retryCount = 2) => {try {
       dueDate: data.dueDate,
       department: data.department,
       jobTitle: data.jobTitle,
+      startDate: data.startDate,
       keyResult: data.keyResult,
       managersGoal: data.managersGoal
     }, {

@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, TrendingUp, Calendar, Target, Heart, Download, FileJson } from 'lucide-react';
 import { exportToPdf, exportToJson } from '@/lib/export';
-import { OKRData, SmartGoalResultsProps } from '@/types/index'; // Assuming you have a types file for OKRData and SmartGoalResultsProps
+import { SmartGoalResultsProps } from '@/types/index'; // Assuming you have a types file for OKRData and SmartGoalResultsProps
 import { useState, useEffect } from "react"
 
 
@@ -138,8 +138,6 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                     className={`border rounded-lg p-6 cursor-pointer ${index === selectedGoalIndex
                       ? 'border-blue-500 bg-blue-50'
                       : 'border-slate-200 bg-slate-50'
-
-
                       }`
                     }
                     onClick={() => setSelectedGoalIndex(index)}
