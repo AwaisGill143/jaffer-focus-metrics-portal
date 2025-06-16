@@ -2,17 +2,26 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, TrendingUp, Calendar, Target, Heart, Download, FileJson } from 'lucide-react';
+import { CheckCircle, TrendingUp, Calendar, Target, Heart, Download, FileJson, AlertCircle } from 'lucide-react';
 import { exportToPdf, exportToJson } from '@/lib/export';
 import { SmartGoalResultsProps } from '@/types/index'; // Assuming you have a types file for OKRData and SmartGoalResultsProps
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 
 const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, isFallback = false }) => {
-
   const [selectedGoalIndex, setSelectedGoalIndex] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState<'save' | 'submit' | null>(null);
 
   const handleExportToPdf = () => {
     exportToPdf('smart-goal-results');
@@ -20,8 +29,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
 
   const handleExportToJson = () => {
     exportToJson(okrData, aiResult);
-  };
-  const handleSendSelectedGoal = (index: number) => {
+  };  const handleSendSelectedGoal = (index: number) => {
     try {
       setLoading(true);
       setError(null);
@@ -30,8 +38,13 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
       if (selectedGoalIndex === index) {
         setSelectedGoalIndex(null);
         setLoading(false);
+        return;
       }
+      
       setSelectedGoalIndex(index);
+      setModalAction('submit');
+      setIsModalOpen(true);
+      setLoading(false);
       console.log("Index of user selected goal:", index);
       
       // complete the logic to send the selected goal index and result
@@ -39,9 +52,48 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
     } catch (err: any) {
       console.error('Error selecting goal:', err);
       setError('An error occurred while selecting the goal. Please try again.');
+      setLoading(false);
     }
   }
-
+  
+  const handleSavingGoal = (index: number) => {
+    try {
+      setModalAction('save');
+      setIsModalOpen(true);
+    } catch (err: any) {
+      console.error('Error saving goal:', err);
+      setError('An error occurred while saving the goal. Please try again.');
+    }
+  }
+  
+  const handleConfirmAction = async () => {
+    try {
+      setLoading(true);
+      
+      if (modalAction === 'save') {
+        // Add your save logic here
+        console.log(`Saving goal #${selectedGoalIndex + 1}`);
+        // Simulating an API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } else if (modalAction === 'submit') {
+        // Add your submit logic here
+        console.log(`Submitting goal #${selectedGoalIndex + 1}`);
+        // Simulating an API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      
+      setIsModalOpen(false);
+      setLoading(false);
+    } catch (err: any) {
+      console.error('Error processing action:', err);
+      setError(`An error occurred while ${modalAction === 'save' ? 'saving' : 'submitting'} the goal. Please try again.`);
+      setLoading(false);
+    }
+  }
+  
+  const handleCancelAction = () => {
+    setIsModalOpen(false);
+  }
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6" id="smart-goal-results">
@@ -236,25 +288,44 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                       </div>
                     </div>
                   // </div>
-                )
-
-
-                )}
+                )                )}
                 {/* {//array ends heere} */}
-                <div className="mt-4 flex justify-end">
-                  <button
-                    className={`px-4 py-2 rounded text-white transition ${selectedGoalIndex !== null
+
+                <div className="mt-8 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                  
+                  <div className="flex flex-col md:flex-row gap-3 justify-end">
+                    <Button
+                      className={`flex items-center gap-2 ${selectedGoalIndex !== null
                         ? 'bg-green-600 hover:bg-green-700'
                         : 'bg-gray-400 cursor-not-allowed'
                       }`}
-                    disabled={selectedGoalIndex === null}
-                    onClick={() =>
-                      selectedGoalIndex !== null &&
-                      handleSendSelectedGoal(selectedGoalIndex)
-                    }
-                  >
-                    Submit Goal
-                  </button>
+                      disabled={selectedGoalIndex === null}
+                      onClick={() =>
+                        selectedGoalIndex !== null &&
+                        handleSavingGoal(selectedGoalIndex)
+                      }
+                    >
+                      <CheckCircle size={16} />
+                      Save and Submit Goal
+                    </Button>
+
+                    <Button
+                      className={`flex items-center gap-2 ${selectedGoalIndex !== null
+                        ? 'bg-amber-600 hover:bg-amber-700'
+                        : 'bg-gray-400 cursor-not-allowed'
+                      }`}
+                      disabled={selectedGoalIndex === null}
+                      onClick={() =>
+                        // open a modal so user can enter what they have to correct 
+
+                        selectedGoalIndex !== null &&
+                        handleSendSelectedGoal(selectedGoalIndex)
+                      }
+                    >
+                      <Calendar size={16} />
+                      Edit Goal
+                    </Button>
+                  </div>
                 </div>
 
               </>
@@ -266,15 +337,58 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                 <div className="text-red-600 font-medium">
                   No SMART goals found in response.
                 </div>
-              )}
-
-
-
-
-            </div>
+              )}            </div>
           </CardContent>
         </Card>
       )}
+      
+      {/* Confirmation Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <AlertCircle className="text-amber-500" size={20} />
+              Confirm {modalAction === 'save' ? 'Save' : 'Submit'}
+            </DialogTitle>
+            <DialogDescription>
+              {modalAction === 'save' 
+                ? 'Are you sure you want to save this goal? This will store it in your personal workspace.'
+                : 'Are you sure you want to submit this goal? This will send it to your manager for review.'}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedGoalIndex !== null && aiResult?.goals && (
+            <div className="p-4 my-2 bg-slate-50 border border-slate-200 rounded-md">
+              <h4 className="font-semibold text-slate-800">Selected Goal:</h4>
+              <p className="text-slate-700">{aiResult.goals[selectedGoalIndex].goal}</p>
+            </div>
+          )}
+          
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button 
+              variant="outline" 
+              onClick={handleCancelAction}
+              disabled={loading}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleConfirmAction}
+              className={modalAction === 'save' ? 'bg-green-600 hover:bg-green-700' : 'bg-amber-600 hover:bg-amber-700'}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <div className="animate-spin h-4 w-4 border-2 border-b-transparent rounded-full mr-2"></div>
+                  Processing...
+                </>
+              ) : (
+                modalAction === 'save' ? 'Save Goal' : 'Submit Goal'
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -16,8 +16,8 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
   const [formData, setFormData] = useState<OKRData>({
     department: user?.department || '',
     jobTitle: user?.designation || '',
-    goalDescription: '',
-    keyResult: '',
+    goalDescription: 'Automate the goal making process',
+    keyResult: 'Reduce meetings with supervisors by 30%',
     startDate: new Date().toISOString().split('T')[0], // Default to today
     managersGoal: user?.managers_goal || '',
     dueDate: ''
