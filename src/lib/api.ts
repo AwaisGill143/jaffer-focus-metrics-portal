@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { generateFallbackGoals } from './fallback';
 import { OKRData } from '@/types';
+
 import toast from 'react-hot-toast';
 import {OutputGoalProps} from '@/types/index'
 
-const API_BASE_URL = 'http://localhost:5000';
+// const API_BASE_URL = 'http://localhost:5000';
+
+const API_BASE_URL = 'https://rag-aws-maker-jbs.onrender.com';
+
 
 
 /**
