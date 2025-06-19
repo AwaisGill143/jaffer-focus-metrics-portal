@@ -12,10 +12,7 @@ export interface OKRData {
   dueDate: string;
 }
 
-export interface AWResultsProps {
-  okrData: OKRData;
-  aiResult?: any;
-}
+
 
 
 export interface OKRFormProps {
@@ -24,14 +21,27 @@ export interface OKRFormProps {
   user?: UserProp;
 }
 
+export interface OutputGoalProps{
+    title: string;
+    description: string;
+    kpi: string;
+    companyTopBetAlignment: string;
+    framework3E: string;
+    coreValue: string;
+}
+
+export interface AIResultProps {
+  goals: Array<OutputGoalProps>;
+}
+
 
 export interface SmartGoalResultsProps {
   okrData: OKRData;
-  aiResult?: any;
+  aiResult?: AIResultProps;
   isFallback?: boolean;
 }
 
 export interface OKRContainerProps {
-  onSubmit: (data: OKRData, aiResult?: any, isFallback?: boolean) => void;
+  onSubmit: (data: OKRData, aiResult?: AIResultProps, isFallback?: boolean) => void;
   user?: UserProp;
 }

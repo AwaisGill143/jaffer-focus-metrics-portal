@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import OKRForm from './OKRForm';
 import LoadingSpinner from './ui/LoadingSpinner';
 import { generateSmartGoal, retry } from '@/lib/api';
-import { Card, CardContent } from '@/components/ui/card';
-import { TrendingUp, Heart } from 'lucide-react';
-import { OKRData, OKRContainerProps } from '@/types/index';
-import { set } from 'date-fns';
-import { send } from 'process';
+import { OKRData, OKRContainerProps, AIResultProps } from '@/types/index';
+
+
 // ['title', 'description', 'kpi', 'companyTopBetAlignment', 'framework3E', 'coreValue']
 
 
@@ -14,9 +12,8 @@ import { send } from 'process';
 const OKRContainer: React.FC<OKRContainerProps> = ({ onSubmit, user }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<AIResultProps | null>(null);
   const [retryCount, setRetryCount] = useState(0);
-  const [selectedGoalIndex, setSelectedGoalIndex] = useState<number | null>(null);
 
   const maxRetries = 3;
 
@@ -44,33 +41,33 @@ const OKRContainer: React.FC<OKRContainerProps> = ({ onSubmit, user }) => {
 
   
 
-  const handleRetry = async () => {
-    if (retryCount >= maxRetries) {
-      setError('Maximum retry attempts reached. Please try again later.');
-      return;
-    }
+  // const handleRetry = async () => {
+  //   if (retryCount >= maxRetries) {
+  //     setError('Maximum retry attempts reached. Please try again later.');
+  //     return;
+  //   }
 
-    setRetryCount(prevCount => prevCount + 1);
-    setError(null);
-    setLoading(true);
+  //   setRetryCount(prevCount => prevCount + 1);
+  //   setError(null);
+  //   setLoading(true);
 
-    try {
-      const response = await generateSmartGoal(result);
+  //   try {
+  //     const response = await generateSmartGoal(data: OKRData);
 
-      if (response.success) {
-        setResult(response.result);
-        onSubmit(result, response.result, response.isFallback);
-        setRetryCount(0);
-      } else {
-        setError(`Retry failed (${retryCount + 1}/${maxRetries}): ${response.error || 'Unknown error'}`);
-      }
-    } catch (err: any) {
-      setError(`Retry failed (${retryCount + 1}/${maxRetries}): An unexpected error occurred`);
-      console.error('Error during retry:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (response.success) {
+  //       setResult(response.result);
+  //       onSubmit(result, response.result, response.isFallback);
+  //       setRetryCount(0);
+  //     } else {
+  //       setError(`Retry failed (${retryCount + 1}/${maxRetries}): ${response.error || 'Unknown error'}`);
+  //     }
+  //   } catch (err: any) {
+  //     setError(`Retry failed (${retryCount + 1}/${maxRetries}): An unexpected error occurred`);
+  //     console.error('Error during retry:', err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   return (
     <div className="space-y-6">
       <OKRForm onSubmit={handleFormSubmit} isLoading={loading} user={user} />
@@ -87,7 +84,7 @@ const OKRContainer: React.FC<OKRContainerProps> = ({ onSubmit, user }) => {
           <div className="flex flex-col gap-3">
             <p>{error}</p>
             <button
-              onClick={handleRetry}
+              onClick={() => <OKRForm onSubmit={handleFormSubmit} isLoading={loading} user={user} />}
               className="self-start px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
               Retry

@@ -12,7 +12,8 @@ import { UserProp } from '@/types/user'; // Assuming you have a types file for U
 
 
 const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) => {
-  console.log('OKRForm user:', user);
+  
+  // console.log('OKRForm user:', user);
   const [formData, setFormData] = useState<OKRData>({
     department: user?.department || '',
     jobTitle: user?.designation || '',
