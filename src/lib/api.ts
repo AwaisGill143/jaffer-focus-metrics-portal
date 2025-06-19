@@ -2,6 +2,7 @@ import axios from 'axios';
 import { generateFallbackGoals } from './fallback';
 import { OKRData } from '@/types';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL! ;
+console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
 
 
 
