@@ -1,14 +1,11 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogIn, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { loginUser } from '@/lib/auth';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import {LoginProps} from '@/types/user'; // Assuming you have a types file for UserProp and LoginProps
-
+import { LoginProps } from '@/types/user';
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('sibtain.naqvi@hysabkytab.com');
@@ -19,31 +16,21 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'email') {
-      setEmail(value);
-    } else if (name === 'password') {
-      setPassword(value);
-    }
-    
-    // Clear error when user starts typing again
+    if (name === 'email') setEmail(value);
+    else if (name === 'password') setPassword(value);
     if (error) setError(null);
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
-
     try {
-      // Send login request to backend
       const response = await loginUser({ email, password });
-      
       if (response.success) {
-        // Login successful
-        console.log("User returned with:", response.user)
-        onLogin(response.user); // when the user is successfully logged in, call the onLogin prop which is passed from the parent component
+        console.log("User returned with:", response.user);
+        onLogin(response.user);
       } else {
-        // Login failed
         setError(response.error || 'Invalid email or password');
       }
     } catch (err) {
@@ -53,35 +40,29 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       setIsLoading(false);
     }
   };
+
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-xl border-slate-200">
-        <CardHeader className="bg-gradient-to-r from-slate-900 to-blue-900 text-white text-center">
-          <div className="flex justify-center mb-4">
-            <div className="bg-white p-3 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-slate-200 rounded flex items-center justify-center text-slate-600 font-bold text-lg">
-                JBS
-              </div>
-            </div>
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50">
+      <div className="max-w-md w-full space-y-8">
+        <div className="bg-white shadow-xl rounded-xl p-8 border border-slate-100">
+          <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white text-center py-4 rounded-lg mb-6">
+            <h2 className="mt-2 text-3xl font-extrabold">Welcome back!</h2>
+            <p className="text-slate-300">Sign in to continue</p>
           </div>
-          <CardTitle className="text-2xl font-bold flex items-center justify-center gap-3">
-            <LogIn size={24} />
-            Login to JBS
-          </CardTitle>
-          <p className="text-blue-200 text-sm mt-2">
-            Access your OKR Management Platform
-          </p>
-        </CardHeader>
-        <CardContent className="p-8">
+
+          <div className="flex justify-center mb-4">
+            <img src="public/JBS-Logo.png" alt="JBS Logo" className="w-28 h-28 object-contain" />
+          </div>
+
           {error && (
             <Alert variant="destructive" className="mb-6">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-slate-700 font-semibold">
@@ -94,7 +75,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 value={email}
                 onChange={handleInputChange}
                 placeholder="Enter your email"
-                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                className="border-gray-300 focus:border-teal-500 focus:ring-teal-500"
                 required
               />
             </div>
@@ -106,12 +87,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <div className="relative">
                 <Input
                   id="password"
-                  name="password" 
+                  name="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={handleInputChange}
                   placeholder="Enter your password"
-                  className="border-slate-300 focus:border-blue-500 focus:ring-blue-500 pr-10"
+                  className="border-gray-300 focus:border-teal-500 focus:ring-teal-500 pr-10"
                   required
                 />
                 <button
@@ -127,19 +108,19 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <Button
               type="submit"
               disabled={!isFormValid || isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold transition-colors duration-200 disabled:bg-slate-300 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 shadow-lg text-white py-3 text-lg font-semibold transition-colors duration-200 disabled:bg-slate-300 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Signing In...' : 'Sign In'}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-slate-600 text-sm">
-              For demo: use email "sibtain.naqvi@hysabkytab.com" and password "1234"
+            <p className="text-slate-500 text-sm">
+              For demo: use email <strong>sibtain.naqvi@hysabkytab.com</strong> and password <strong>1234</strong>
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
