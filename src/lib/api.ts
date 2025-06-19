@@ -1,8 +1,13 @@
 import axios from 'axios';
 import { generateFallbackGoals } from './fallback';
 import { OKRData } from '@/types';
-const API_BASE_URL = 'https://rag-aws-maker-jbs.onrender.com';
 
+import toast from 'react-hot-toast';
+import {OutputGoalProps} from '@/types/index'
+
+// const API_BASE_URL = 'http://localhost:5000';
+
+const API_BASE_URL = 'https://rag-aws-maker-jbs.onrender.com';
 
 
 
@@ -56,6 +61,53 @@ export const generateSmartGoal = async (data: OKRData, retryCount = 2) => {try {
       };
     }
       return {
+      success: false,
+      error: error.response?.data?.error || 'An error occurred while connecting to the server'
+    };
+  }
+};
+
+
+/**
+ * Sends users goal to backend for saving it
+ * @param goal User's goal data
+ * @returns Promise containing the API response
+ */
+export const saveUserGoal = async (goal: OutputGoalProps) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/api/save-user-goal`, goal);
+    return {
+      success: true,
+      result: response.data
+    };
+  } catch (error: any) {
+    console.error('Error saving user goal:', error);
+    return {
+      success: false,
+      error: error.response?.data?.error || 'An error occurred while connecting to the server'
+    };
+  }
+};
+
+/**
+ * Sends the user comments the goal to backend for editing it 
+ */
+export const SendEdit = async (goal: OutputGoalProps, comment: string) => {
+  try {
+
+    const response = await axios.post(`${API_BASE_URL}/api/edit-user-goal`, {
+      goal,
+      comment
+    });
+    
+    return {
+      success: true,
+      result: response.data
+    };
+
+  } catch (error: any) {
+    console.error('Error editing user goal:', error);
+    return {
       success: false,
       error: error.response?.data?.error || 'An error occurred while connecting to the server'
     };

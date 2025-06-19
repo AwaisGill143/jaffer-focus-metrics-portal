@@ -27,7 +27,7 @@ const Index = () => {
     });
   };
   const handleOKRSubmit = (data: OKRData, result?: any, isFallback?: boolean) => {
-    console.log('OKR submitted:', data);
+    // console.log('OKR submitted:', data);
     setSubmittedOKR(data);
     if (result) {
       console.log('AI result received:', result);
