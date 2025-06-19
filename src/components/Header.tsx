@@ -21,7 +21,7 @@ const Header = () => {
                 OKR Management Platform - Objectives, Key Results & SMART Goals
               </p>
               <div className="mt-2">
-                <ApiStatus apiUrl="http://localhost:5000" />
+                <ApiStatus apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'} />
               </div>
             </div>
           </div>
