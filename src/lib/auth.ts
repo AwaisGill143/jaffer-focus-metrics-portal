@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { generateFallbackGoals } from './fallback';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL!;
+const API_BASE_URL = 'https://rag-aws-maker-jbs.onrender.com';
+
 
 
 interface AuthResponse {
