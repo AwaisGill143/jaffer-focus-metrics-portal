@@ -9,7 +9,7 @@
 const isProd = import.meta.env.PROD || import.meta.env.MODE === 'production';
 const isDev = import.meta.env.DEV || import.meta.env.MODE === 'development';
 
-// Configuration object
+// ✅ Corrected: config object
 export const config = {
   // API URLs
 //   api: {
@@ -18,21 +18,21 @@ export const config = {
 //       : import.meta.env.API_BASE_URL || 'http://localhost:5000'
 //   },
   api: {
+
     baseUrl: 'http://localhost:5000'
   },
 
  
 
+
   // Authentication
   auth: {
     tokenKey: 'jbs_auth_token',
-    // Add other auth-related config here
   },
   
   // Feature flags
   features: {
     enableFallback: true,
-    // Add other feature flags here
   }
 };
 
