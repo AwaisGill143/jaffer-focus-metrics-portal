@@ -18,7 +18,7 @@ export const config = {
 //       : import.meta.env.API_BASE_URL || 'http://localhost:5000'
 //   },
   api: {
-    baseUrl: 'http://localhost:5000'
+    baseUrl: 'http://192.168.100.6:5000'
   },
 
  
