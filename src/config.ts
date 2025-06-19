@@ -9,30 +9,23 @@
 const isProd = import.meta.env.PROD || import.meta.env.MODE === 'production';
 const isDev = import.meta.env.DEV || import.meta.env.MODE === 'development';
 
-// Configuration object
+// ✅ Corrected: config object
 export const config = {
-  API URLs
+  // API URLs
   api: {
     baseUrl: isProd 
       ? 'https://rag-aws-maker-jbs.onrender.com'
-      : import.meta.env.API_BASE_URL || 'http://localhost:5000'
+      : import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
   },
-  // api: {
-  //   baseUrl: 'http://192.168.100.6:5000'
-  // },
-
- 
 
   // Authentication
   auth: {
     tokenKey: 'jbs_auth_token',
-    // Add other auth-related config here
   },
   
   // Feature flags
   features: {
     enableFallback: true,
-    // Add other feature flags here
   }
 };
 
