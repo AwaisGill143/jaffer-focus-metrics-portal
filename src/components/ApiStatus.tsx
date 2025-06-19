@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AlertCircle, CheckCircle, Wifi, WifiOff } from 'lucide-react';
 import {ApiStatusProps} from '@/types/api'; // Assuming you have a types file for ApiStatusProps
-import axios from 'axios';
-import { generateFallbackGoals } from './fallback';
-
-const API_BASE_URL = 'https://rag-aws-maker-jbs.onrender.com';
-
-
+import { API_BASE_URL } from '@/config';
 
 
 
