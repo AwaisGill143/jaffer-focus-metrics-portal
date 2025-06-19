@@ -1,15 +1,9 @@
 import axios from 'axios';
 import { generateFallbackGoals } from './fallback';
 import { OKRData } from '@/types';
-
 import toast from 'react-hot-toast';
-import {OutputGoalProps} from '@/types/index'
-
-// const API_BASE_URL = 'http://localhost:5000';
-
-const API_BASE_URL = 'https://rag-aws-maker-jbs.onrender.com';
-
-
+import { OutputGoalProps } from '@/types/index';
+import { API_BASE_URL } from '@/config';
 
 /**
  * Sends the OKR data to the backend and gets AI-generated SMART goals
@@ -99,7 +93,7 @@ export const SendEdit = async (goal: OutputGoalProps, comment: string) => {
       goal,
       comment
     });
-    
+
     return {
       success: true,
       result: response.data

@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { generateFallbackGoals } from './fallback';
-
-const API_BASE_URL = 'https://rag-aws-maker-jbs.onrender.com';
-
-
+import { API_BASE_URL, config } from '@/config';
 
 interface AuthResponse {
   success: boolean;
@@ -39,11 +36,9 @@ export const loginUser = async (credentials: LoginCredentials): Promise<AuthResp
         'Content-Type': 'application/json',
       },
       timeout: 10000 // 10 seconds timeout
-    });
-
-    // Store token in localStorage for persistent auth
+    });    // Store token in localStorage for persistent auth
     if (response.data.token) {
-      localStorage.setItem('jbs_auth_token', response.data.token);
+      localStorage.setItem(config.auth.tokenKey, response.data.token);
     }
 
     console.log('Login successful for the user :', response.data.user.email);
@@ -95,7 +90,7 @@ export const registerUser = async (credentials: RegisterCredentials): Promise<Au
  * Logout user and clear token
  */
 export const logoutUser = (): void => {
-  localStorage.removeItem('jbs_auth_token');
+  localStorage.removeItem(config.auth.tokenKey);
 };
 
 /**
@@ -103,7 +98,7 @@ export const logoutUser = (): void => {
  * @returns Boolean indicating authentication status
  */
 export const isAuthenticated = (): boolean => {
-  return !!localStorage.getItem('jbs_auth_token');
+  return !!localStorage.getItem(config.auth.tokenKey);
 };
 
 /**
@@ -111,7 +106,7 @@ export const isAuthenticated = (): boolean => {
  * @returns The authentication token or null
  */
 export const getAuthToken = (): string | null => {
-  return localStorage.getItem('jbs_auth_token');
+  return localStorage.getItem(config.auth.tokenKey);
 };
 
 /**
