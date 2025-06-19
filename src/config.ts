@@ -12,12 +12,17 @@ const isDev = import.meta.env.DEV || import.meta.env.MODE === 'development';
 // Configuration object
 export const config = {
   // API URLs
+//   api: {
+//     baseUrl: isProd 
+//       ? 'https://rag-aws-maker-jbs.onrender.com'
+//       : import.meta.env.API_BASE_URL || 'http://localhost:5000'
+//   },
   api: {
-    baseUrl: isProd 
-      ? 'https://rag-aws-maker-jbs.onrender.com'
-      : import.meta.env.API_BASE_URL || 'http://localhost:5000'
+    baseUrl: 'http://localhost:5000'
   },
-  
+
+ 
+
   // Authentication
   auth: {
     tokenKey: 'jbs_auth_token',

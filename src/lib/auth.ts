@@ -37,6 +37,8 @@ export const loginUser = async (credentials: LoginCredentials): Promise<AuthResp
       },
       timeout: 10000 // 10 seconds timeout
     });    // Store token in localStorage for persistent auth
+    console.log('Login response:', response.data);
+    
     if (response.data.token) {
       localStorage.setItem(config.auth.tokenKey, response.data.token);
     }
