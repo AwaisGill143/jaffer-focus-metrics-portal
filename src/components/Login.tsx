@@ -53,7 +53,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </div>
 
           <div className="flex justify-center mb-4">
-            <img src="public/JBS-Logo.png" alt="JBS Logo" className="w-28 h-28 object-contain" />
+            <img src="/JBS-Logo.png" alt="JBS Logo" className="w-28 h-28 object-contain" />
           </div>
 
           {error && (
