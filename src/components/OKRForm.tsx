@@ -109,61 +109,6 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
 
   return (
     <div className="font-inter">
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        .font-inter {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        .animate-fade-in-up {
-          animation: fadeInUp 0.6s ease-out forwards;
-        }
-        .animate-slide-in-left {
-          animation: slideInLeft 0.5s ease-out forwards;
-        }
-        .animate-slide-in-right {
-          animation: slideInRight 0.5s ease-out forwards;
-        }
-        .animate-scale-in {
-          animation: scaleIn 0.4s ease-out forwards;
-        }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-30px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInRight {
-          from { opacity: 0; transform: translateX(30px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        .input-focus-glow {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .input-focus-glow:focus {
-          box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1), 0 0 20px rgba(20, 184, 166, 0.1);
-          transform: translateY(-1px);
-        }
-        .button-hover-lift {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .button-hover-lift:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .label-slide {
-          transition: all 0.2s ease-out;
-        }
-        .label-slide:hover {
-          transform: translateX(2px);
-        }
-      `}</style>
-
       <Card className="w-full max-w-4xl mx-auto shadow-2xl border-0 rounded-2xl overflow-hidden animate-fade-in-up">
         <CardHeader className="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 border-b border-slate-100 p-8">
           <CardTitle className="text-3xl font-bold text-slate-800 flex items-center gap-4 tracking-tight animate-scale-in">

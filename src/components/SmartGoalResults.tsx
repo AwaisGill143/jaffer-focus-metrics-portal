@@ -126,61 +126,19 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-8 font-inter" id="smart-goal-results">
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        .font-inter {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        .animate-fade-in {
-          animation: fadeIn 0.6s ease-out forwards;
-        }
-        .animate-slide-up {
-          animation: slideUp 0.5s ease-out forwards;
-        }
-        .animate-scale-in {
-          animation: scaleIn 0.3s ease-out forwards;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        .button-hover-lift {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .button-hover-lift:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .card-hover {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-hover:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-      `}</style>
-
+    <div className="w-full max-w-6xl mx-auto space-y-8 font-sans" id="smart-goal-results">
       {/* Export buttons */}
-      <div className="flex justify-end gap-4 animate-fade-in">
+      <div className="flex justify-end gap-4 opacity-0 animate-pulse">
         <Button
           onClick={handleExportToPdf}
-          className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg button-hover-lift border-0 transition-all duration-300"
+          className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:-translate-y-0.5 hover:shadow-xl border-0 transition-all duration-300 transform"
         >
           <Download size={18} className="mr-2" />
           Export PDF
         </Button>
         <Button
           onClick={handleExportToJson}
-          className="bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white font-semibold px-6 py-3 rounded-xl shadow-lg button-hover-lift border-0 transition-all duration-300"
+          className="bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:-translate-y-0.5 hover:shadow-xl border-0 transition-all duration-300 transform"
         >
           <FileJson size={18} className="mr-2" />
           Export JSON
@@ -188,7 +146,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
       </div>
 
       {/* OKR Summary */}
-      <Card className="shadow-2xl border-0 rounded-2xl overflow-hidden animate-slide-up card-hover">
+      <Card className="shadow-2xl border-0 rounded-2xl overflow-hidden transform transition-all duration-500 hover:-translate-y-1 hover:shadow-3xl">
         <CardHeader className="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 border-b border-slate-100 p-8">
           <CardTitle className="text-2xl font-bold text-slate-800 flex items-center gap-4 tracking-tight">
             <div className="p-2 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl text-white">
@@ -209,7 +167,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                 <p className="text-slate-900 font-semibold text-lg">{okrData.jobTitle}</p>
               </div>
               <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
-                <h3 className="font-semibold text-slate-600 mb-2 text-sm uppercase tracking-wide">Department Head Objective</h3>
+                <h3 className="font-semibold text-slate-600 mb-2 text-sm uppercase tracking-wide">Manager's Goal</h3>
                 <p className="text-slate-700 leading-relaxed">{okrData.managersGoal}</p>
               </div>
             </div>
@@ -236,10 +194,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
 
       {/* AI Generated Results */}
       {aiResult && (
-        <Card
-          className="shadow-2xl border-0 rounded-2xl overflow-hidden animate-slide-up card-hover"
-          style={{ animationDelay: "0.2s" }}
-        >
+        <Card className="shadow-2xl border-0 rounded-2xl overflow-hidden transform transition-all duration-500 hover:-translate-y-1 hover:shadow-3xl">
           <CardHeader className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-8">
             <CardTitle className="text-2xl font-bold flex items-center gap-4 tracking-tight">
               <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl">
@@ -267,10 +222,10 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                   {localGoals.map((goal, index) => (
                     <div
                       key={index}
-                      className={`border rounded-2xl p-8 cursor-pointer transition-all duration-500 animate-scale-in ${
+                      className={`border rounded-2xl p-8 cursor-pointer transition-all duration-500 transform hover:scale-[1.02] ${
                         index === selectedGoalIndex
                           ? "border-teal-400 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 shadow-xl ring-2 ring-teal-200"
-                          : "border-slate-200 bg-gradient-to-br from-white to-slate-50 hover:border-teal-300 hover:shadow-lg"
+                          : "border-slate-200 bg-gradient-to-br from-white to-slate-50 hover:border-teal-300 hover:shadow-lg hover:-translate-y-1"
                       }`}
                       style={{ animationDelay: `${index * 0.1}s` }}
                       onClick={() => setSelectedGoalIndex(index)}
@@ -376,7 +331,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                   <div className="mt-10 p-6 bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 rounded-2xl animate-fade-in">
                     {/* Success message */}
                     {successMessage && (
-                      <div className="mb-6 p-4 bg-gradient-to-r from-emerald-100 to-teal-100 border border-emerald-300 text-emerald-800 rounded-xl animate-scale-in">
+                      <div className="mb-6 p-4 bg-gradient-to-r from-emerald-100 to-teal-100 border border-emerald-300 text-emerald-800 rounded-xl transform transition-all duration-300 animate-pulse">
                         <div className="flex items-center font-semibold">
                           <CheckCircle size={20} className="mr-3" />
                           {successMessage}
@@ -386,7 +341,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
 
                     {/* Error message */}
                     {error && (
-                      <div className="mb-6 p-4 bg-gradient-to-r from-red-100 to-rose-100 border border-red-300 text-red-800 rounded-xl animate-scale-in">
+                      <div className="mb-6 p-4 bg-gradient-to-r from-red-100 to-rose-100 border border-red-300 text-red-800 rounded-xl transform transition-all duration-300 animate-pulse">
                         <div className="flex items-center font-semibold">
                           <AlertCircle size={20} className="mr-3" />
                           {error}
@@ -396,9 +351,9 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
 
                     <div className="flex flex-col md:flex-row gap-4 justify-end">
                       <Button
-                        className={`flex items-center gap-3 font-semibold px-8 py-4 rounded-xl shadow-lg button-hover-lift border-0 transition-all duration-300 ${
+                        className={`flex items-center gap-3 font-semibold px-8 py-4 rounded-xl shadow-lg hover:-translate-y-0.5 hover:shadow-xl border-0 transition-all duration-300 transform ${
                           selectedGoalIndex !== null
-                            ? "bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white"
+                            ? "bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white hover:scale-105"
                             : "bg-slate-300 text-slate-500 cursor-not-allowed"
                         }`}
                         disabled={selectedGoalIndex === null}
@@ -414,9 +369,9 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                       </Button>
 
                       <Button
-                        className={`flex items-center gap-3 font-semibold px-8 py-4 rounded-xl shadow-lg button-hover-lift border-0 transition-all duration-300 ${
+                        className={`flex items-center gap-3 font-semibold px-8 py-4 rounded-xl shadow-lg hover:-translate-y-0.5 hover:shadow-xl border-0 transition-all duration-300 transform ${
                           selectedGoalIndex !== null
-                            ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white"
+                            ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white hover:scale-105"
                             : "bg-slate-300 text-slate-500 cursor-not-allowed"
                         }`}
                         disabled={selectedGoalIndex === null}
@@ -447,7 +402,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
       {/* Edit Modal */}
       {modalAction === "edit" && (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <DialogContent className="sm:max-w-lg rounded-2xl border-0 shadow-2xl">
+          <DialogContent className="sm:max-w-lg rounded-2xl border-0 shadow-2xl transform transition-all duration-300">
             <DialogHeader className="pb-6">
               <DialogTitle className="flex items-center gap-3 text-xl font-bold text-slate-800">
                 <div className="p-2 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl text-white">
@@ -498,7 +453,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                 variant="outline"
                 onClick={handleCancelAction}
                 disabled={loading}
-                className="px-6 py-3 rounded-xl font-semibold border-2 border-slate-300 hover:border-slate-400 transition-all duration-300"
+                className="px-6 py-3 rounded-xl font-semibold border-2 border-slate-300 hover:border-slate-400 transition-all duration-300 hover:scale-105 transform"
               >
                 Cancel
               </Button>
@@ -511,7 +466,7 @@ const SmartGoalResults: React.FC<SmartGoalResultsProps> = ({ okrData, aiResult, 
                     handleEditSelectedGoal(selectedGoalIndex, goal, userComments || "")
                   }
                 }}
-                className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg button-hover-lift border-0 transition-all duration-300"
+                className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:-translate-y-0.5 hover:shadow-xl border-0 transition-all duration-300 transform hover:scale-105"
                 disabled={loading}
               >
                 Submit Changes
