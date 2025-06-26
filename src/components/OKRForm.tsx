@@ -113,7 +113,7 @@ const OKRForm: React.FC<OKRFormProps> = ({ onSubmit, isLoading = false, user }) 
           <div className="space-y-2">
             <Label htmlFor="managersGoal" className="text-slate-700 font-semibold flex items-center gap-2">
               <Users size={16} className="text-teal-600" />
-              Manager's Goal
+              Department Head Objective
             </Label>
             <Textarea
               id="managersGoal"
